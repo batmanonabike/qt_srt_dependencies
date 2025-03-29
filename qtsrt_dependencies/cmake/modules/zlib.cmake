@@ -7,8 +7,8 @@ set(ZLIB_INSTALL_DIR ${CMAKE_BINARY_DIR}/zlib)
 # Add ExternalProject for zlib
 ExternalProject_Add(
     zlib
-    URL https://zlib.net/zlib-${ZLIB_VERSION}.tar.gz
-    URL_HASH SHA256=7a62b6c5a7b7b8c1b8c1b8c1b8c1b8c1b8c1b8c1b8c1b8c1b8c1b8c1b8c1b8c1
+    URL https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz
+    URL_HASH SHA256=9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23
     PREFIX ${CMAKE_BINARY_DIR}/zlib_build
     CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${ZLIB_INSTALL_DIR}
     BUILD_COMMAND make -j${CMAKE_JOB_POOL_COMPILE}

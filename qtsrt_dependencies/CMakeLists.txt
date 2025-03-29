@@ -10,4 +10,7 @@ include(zlib)
 add_executable(qtsrt_dependencies src/main.cpp)
 
 # Link the zlib library
-target_link_libraries(qtsrt_dependencies PRIVATE zlib)
+target_include_directories(qtsrt_dependencies PRIVATE ${ZLIB_INCLUDE_DIR})
+target_link_libraries(qtsrt_dependencies PRIVATE ${ZLIB_LIBRARY})
+
+# target_link_libraries(qtsrt_dependencies PRIVATE zlib)
