@@ -48,6 +48,38 @@ To build the project, follow these steps:
    cmake --build .
    ```
 
+## Building the Project for Android
+
+### To build for Android using Qt Creator:
+
+1. Open your project in Qt Creator
+2. Configure the project for your Android kit
+3. In Build Settings, add these CMake arguments:
+```CMake
+-DCMAKE_TOOLCHAIN_FILE=/Users/d/Library/Android/sdk/ndk/29.0.13113456/build/cmake/android.toolchain.cmake
+-DANDROID=ON
+-DCMAKE_SYSTEM_NAME=Android
+-DCMAKE_ANDROID_ARCH_ABI=arm64-v8a
+-DCMAKE_ANDROID_API=21
+```
+
+### To build for Android from the command line:
+
+```bash
+export ANDROID_NDK=/Users/d/Library/Android/sdk/ndk/29.0.13113456
+mkdir -p build/android
+cd build/android
+cmake -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake \
+      -DANDROID=ON \
+      -DCMAKE_SYSTEM_NAME=Android \
+      -DCMAKE_ANDROID_ARCH_ABI=arm64-v8a \
+      -DCMAKE_ANDROID_API=21 \
+      ../..
+make
+```
+
+**Make sure your ANDROID_NDK environment variable is set correctly before running these commands.**
+
 ## Running the Application
 
 After building the project, you can run the application with the following command:
