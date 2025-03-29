@@ -19,14 +19,19 @@ Follow these steps to build OpenSSL on macOS:
     ```
 
 ## Steps to Build OpenSSL
-1. Download the OpenSSL source code:
+1. Download the OpenSSL source code (the sha below is 3.4):
     ```bash
-    curl -O https://www.openssl.org/source/openssl-1.1.1w.tar.gz
-    tar -xzf openssl-1.1.1w.tar.gz
-    cd openssl-1.1.1w
+    cd libs
+    git clone https://github.com/openssl/openssl.git
+    cd openssl
+    git checkout a26d85337dbdcd33c971f38eb3fa5150e75cea87
     ```
 
 2. Configure the build for macOS:
+    ```bash
+    ./Configure darwin64-arm64-cc --prefix=/usr/local/openssl
+    ```
+    Or, if not on Apple Silicon:  
     ```bash
     ./Configure darwin64-x86_64-cc --prefix=/usr/local/openssl
     ```
@@ -51,5 +56,3 @@ Follow these steps to build OpenSSL on macOS:
     ```
 
 ## Notes
-- Replace `openssl-1.1.1w` with the desired version.
-- Ensure you have sufficient permissions for installation.
