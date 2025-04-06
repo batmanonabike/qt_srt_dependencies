@@ -19,10 +19,7 @@ if(ANDROID)
             -DCMAKE_INSTALL_PREFIX=${ZLIB_INSTALL_DIR}
             -DCMAKE_BUILD_TYPE=Release
     )
-
-    # For Android, specify the static library with correct extension
-    set(ZLIB_LIBRARY ${ZLIB_INSTALL_DIR}/lib/libz.a)
-else()
+    else()
     # Original configuration for non-Android platforms
     ExternalProject_Add(
         zlib
@@ -32,10 +29,10 @@ else()
         CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${ZLIB_INSTALL_DIR}
         BUILD_COMMAND make -j${CMAKE_JOB_POOL_COMPILE}
         INSTALL_COMMAND make install
-    )
-    set(ZLIB_LIBRARY ${ZLIB_INSTALL_DIR}/lib/libz.a)
-endif()
-
-# Add zlib include and library paths for dependent targets
+        )
+        set(ZLIB_LIBRARY ${ZLIB_INSTALL_DIR}/lib/libz.a)
+        endif()
+        
+set(ZLIB_LIBRARY ${ZLIB_INSTALL_DIR}/lib/libz.a)
 set(ZLIB_INCLUDE_DIR ${ZLIB_INSTALL_DIR}/include)
-# set(ZLIB_LIBRARY ${ZLIB_INSTALL_DIR}/lib/libz.a)
+
