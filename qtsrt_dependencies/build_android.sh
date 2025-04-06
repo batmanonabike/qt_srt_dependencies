@@ -76,15 +76,3 @@ cmake --build .
 
 echo "=== Build complete ==="
 echo "Executable location: $(pwd)/qtsrt_dependencies"
-
-# file build_android/qtsrt_dependencies
-
-# which adb
-# Push to Android device
-# adb push build_android/qtsrt_dependencies /data/local/tmp/
-
-# Set executable permissions
-# adb shell chmod 755 /data/local/tmp/qtsrt_dependencies
-
-# Run the executable
-# adb shell /data/local/tmp/qtsrt_dependencies

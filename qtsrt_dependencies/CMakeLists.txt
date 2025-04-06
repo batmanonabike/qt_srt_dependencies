@@ -9,6 +9,7 @@ cmake_minimum_required(VERSION 3.10)
 # cmake --build .
 # NOTE THAT: CMAKE_TOOLCHAIN_FILE is required from the command line.
 # Otherwise its too later for CMake to figure out which build system to use.
+# https://developer.android.com/ndk/guides/cmake
 
 # Handle Android toolchain before project() command
 if(ANDROID)
@@ -26,26 +27,21 @@ if(ANDROID)
             CACHE PATH "Android toolchain file")
     endif()
     
-    set(CMAKE_ANDROID_ARCH_ABI "arm64-v8a" CACHE STRING "Android ABI")
-    set(CMAKE_ANDROID_API 21 CACHE STRING "Android API level")
-    message(STATUS "Using Android NDK at: ${ANDROID_NDK}")
+    # set(CMAKE_ANDROID_ARCH_ABI "arm64-v8a" CACHE STRING "Android ABI")
+    # set(CMAKE_ANDROID_API 21 CACHE STRING "Android API level")
+    message(STATUS "ANDROID_NDK: ${ANDROID_NDK}")
+    message(STATUS "CMAKE_ANDROID_ARCH_ABI: '${CMAKE_ANDROID_ARCH_ABI}'")
+    message(STATUS "CMAKE_ANDROID_API: '${CMAKE_ANDROID_API}'")
 endif()
 
 project(qtsrt_dependencies)
-
-# Print Android configuration if in Android mode
-if(ANDROID)
-    message(STATUS "Building for Android:")
-    message(STATUS "  NDK path: ${ANDROID_NDK}")
-    message(STATUS "  ABI: ${CMAKE_ANDROID_ARCH_ABI}")
-    message(STATUS "  API level: ${CMAKE_ANDROID_API}")
-endif()
 
 message(STATUS CMAKE_SYSTEM_NAME "  ${CMAKE_SYSTEM_NAME}")
 
 # Include the zlib configuration module
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
 include(zlib)
+include(libvpx)
 
 # Set Android-specific options if needed
 if(ANDROID)
@@ -59,6 +55,15 @@ endif()
 # Define the executable target
 add_executable(qtsrt_dependencies src/main.cpp)
 
-# Link the zlib library
-target_include_directories(qtsrt_dependencies PRIVATE ${ZLIB_INCLUDE_DIR})
-target_link_libraries(qtsrt_dependencies PRIVATE ${ZLIB_LIBRARY})
+# Add dependencies to ensure correct build order
+add_dependencies(qtsrt_dependencies zlib libvpx)
+
+# Link libraries
+target_include_directories(qtsrt_dependencies PRIVATE 
+    ${ZLIB_INCLUDE_DIR}
+    ${LIBVPX_INCLUDE_DIR}
+)
+target_link_libraries(qtsrt_dependencies PRIVATE 
+    ${ZLIB_LIBRARY}
+    ${LIBVPX_LIBRARY}
+)
