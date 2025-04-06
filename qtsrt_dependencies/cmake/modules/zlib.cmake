@@ -14,13 +14,14 @@ if(ANDROID)
         PREFIX ${CMAKE_BINARY_DIR}/zlib_build
         CMAKE_ARGS
             -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
-            -DCMAKE_INSTALL_PREFIX=${ZLIB_INSTALL_DIR}
-            -DCMAKE_SYSTEM_NAME=${CMAKE_SYSTEM_NAME}
-            -DCMAKE_SYSTEM_VERSION=${CMAKE_SYSTEM_VERSION}
+            -DCMAKE_ANDROID_API=${CMAKE_ANDROID_API}
             -DCMAKE_ANDROID_ARCH_ABI=${CMAKE_ANDROID_ARCH_ABI}
-            -DCMAKE_ANDROID_NDK=${CMAKE_ANDROID_NDK}
-            -DCMAKE_ANDROID_STL_TYPE=${CMAKE_ANDROID_STL_TYPE}
+            -DCMAKE_INSTALL_PREFIX=${ZLIB_INSTALL_DIR}
+            -DCMAKE_BUILD_TYPE=Release
     )
+
+    # For Android, specify the static library with correct extension
+    set(ZLIB_LIBRARY ${ZLIB_INSTALL_DIR}/lib/libz.a)
 else()
     # Original configuration for non-Android platforms
     ExternalProject_Add(
@@ -32,8 +33,9 @@ else()
         BUILD_COMMAND make -j${CMAKE_JOB_POOL_COMPILE}
         INSTALL_COMMAND make install
     )
+    set(ZLIB_LIBRARY ${ZLIB_INSTALL_DIR}/lib/libz.a)
 endif()
 
 # Add zlib include and library paths for dependent targets
 set(ZLIB_INCLUDE_DIR ${ZLIB_INSTALL_DIR}/include)
-set(ZLIB_LIBRARY ${ZLIB_INSTALL_DIR}/lib/libz.a)
+# set(ZLIB_LIBRARY ${ZLIB_INSTALL_DIR}/lib/libz.a)

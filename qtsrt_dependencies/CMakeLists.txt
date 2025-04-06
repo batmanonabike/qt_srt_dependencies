@@ -2,10 +2,13 @@ cmake_minimum_required(VERSION 3.10)
 
 # Example Android build commands:
 # export ANDROID_NDK=/Users/d/Library/Android/sdk/ndk/29.0.13113456
+# export ANDROID_CMAKE=$ANDROID_NDK/build/cmake/android.toolchain.cmake
 # mkdir build_android
 # cd build_android
-# cmake -DANDROID=ON ..
+# cmake -DANDROID=ON -DCMAKE_TOOLCHAIN_FILE=$ANDROID_CMAKE ..
 # cmake --build .
+# NOTE THAT: CMAKE_TOOLCHAIN_FILE is required from the command line.
+# Otherwise its too later for CMake to figure out which build system to use.
 
 # Handle Android toolchain before project() command
 if(ANDROID)
@@ -37,6 +40,8 @@ if(ANDROID)
     message(STATUS "  ABI: ${CMAKE_ANDROID_ARCH_ABI}")
     message(STATUS "  API level: ${CMAKE_ANDROID_API}")
 endif()
+
+message(STATUS CMAKE_SYSTEM_NAME "  ${CMAKE_SYSTEM_NAME}")
 
 # Include the zlib configuration module
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")

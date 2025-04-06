@@ -66,6 +66,7 @@ To build the project, follow these steps:
 ### To build for Android from the command line:
 
 ```bash
+export ANDROID_NDK=/Users/d/Library/Android/sdk/ndk/29.0.13113456
 mkdir build_android
 cd build_android
 cmake -DANDROID=ON ..
@@ -85,6 +86,29 @@ After building the project, you can run the application with the following comma
 
 The application utilizes the zlib library for compression and decompression tasks. Refer to the source code in `src/main.cpp` for implementation details.
 
-## License
+## Android considerations
 
-This project is licensed under the MIT License. See the LICENSE file for more information.
+`add_executable` in CMake will build executables for Android when using the Android toolchain. However, there are important considerations:
+
+### How It Works for Android
+When building with the Android NDK toolchain:
+  - The executable is compiled for the target architecture (arm64-v8a)
+  - The binary format is Android-compatible (ELF)
+  - It will use proper Android dynamic linker paths
+
+### Important Considerations
+1. Deployment: Android executables aren't packaged as APKs - they're raw binaries that must be:
+    - Deployed manually via `adb push`
+    - Executed with proper permissions via `adb shell`
+
+2. Use Cases: Native executables on Android are typically for:
+   - Command-line utilities
+   - Background services
+   - Native components that are called from Java/Kotlin
+
+3. For a Complete Android App: If you're building an Android application, you would typically:
+
+   - Use add_library(... SHARED ...) instead of add_executable
+   - Package the library with Gradle into an APK
+   
+For your current setup with CLI tools or native utilities, add_executable is appropriate. For a complete Android application, you'd need additional packaging steps.
