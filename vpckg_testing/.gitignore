@@ -1,0 +1,23 @@
+# Ignore files related to vcpkg
+/vcpkg/
+.vcpkg-root
+
+# vcpkg build artifacts
+buildtrees/
+downloads/
+packages/
+installed/
+
+# CMake generated build directories
+/CMakeFiles/
+/CMakeCache.txt
+/*.cmake
+
+# Logs
+*.log
+
+# IDE-specific files
+/.idea/
+/.vscode/
+/.clion/
+*.iml
