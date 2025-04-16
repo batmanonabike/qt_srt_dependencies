@@ -1,6 +1,5 @@
-
-
 # FFmpeg Dependencies, Build Order, and Tooling
+Note that this document was edited using the GitHub friendly mark down [format](https://www.markdownguide.org/cheat-sheet/).
 
 Below is a table listing the dependencies required for FFmpeg, the order in which they should be built, and the required tooling for each library.
 
